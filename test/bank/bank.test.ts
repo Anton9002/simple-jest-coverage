@@ -15,7 +15,25 @@ describe('Bank', () => {
       bank.deposit(50)
       expect(bank.getBalance()).toBe(150)
     })
+
+    test('decreases balance by the specified amount', () => {
+      bank.deposit(100)
+      bank.withdraw(50)
+      expect(bank.getBalance()).toBe(50)
+    })
+
+    test('verify enough balance - positive case', () => {
+      bank.deposit(25)
+      expect(bank.hasEnoughBalance()).toBeTruthy()
+    })
+
+    test('verify enough balance - negative case', () => {
+      bank.deposit(24)
+      expect(bank.hasEnoughBalance()).toBeFalsy()
+    })
+
   })
+
 
   // TODO: withdraw tests to increase coverage according to the threshold
 })
