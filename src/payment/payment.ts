@@ -1,14 +1,14 @@
 export class PaymentService {
 
-  amount: number;
-  isPaid: boolean = false;
+  amount: number
+  isPaid: boolean = false
 
   constructor(amount: number)
   {
 
     if(amount <= 0) {
 
-      throw new Error("Amount must be greater than 0");
+      throw new Error("Amount must be greater than 0")
 
     }
 
@@ -20,11 +20,11 @@ export class PaymentService {
 
     if (percent < 0 || percent > 100 || this.isPaid) {
 
-      return;
+      return
 
     }
 
-    this.amount = this.amount - this.amount * (percent / 100);
+    this.amount = this.amount - this.amount * (percent / 100)
 
   }
 
@@ -32,13 +32,13 @@ export class PaymentService {
 
     if (this.isPaid) {
 
-      return false;
+      return false
 
     }
 
-    this.isPaid = true;
+    this.isPaid = true
 
-    return this.isPaid;
+    return true
 
   }
 }

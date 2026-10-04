@@ -6,8 +6,8 @@ describe("Payment service", () => {
 
     test('amount must be greater than 0', () => {
 
-      expect(() => new PaymentService(0)).toThrow("Amount must be greater than 0");
-      expect(() => new PaymentService(-1)).toThrow('Amount must be greater than 0')
+      expect(() => new PaymentService(0)).toThrow("Amount must be greater than 0")
+      expect(() => new PaymentService(-1)).toThrow("Amount must be greater than 0")
 
     })
 
@@ -76,14 +76,14 @@ describe("Payment service", () => {
     })
 
     describe('Pay', () => {
-      test('mark payment as completed returns true', () => {
+      test('marking payment as completed returns true', () => {
 
         expect(service.pay()).toBeTruthy()
         expect(service.isPaid).toBeTruthy()
 
       })
 
-      test('mark payment as completed more than one time returns false', () => {
+      test('marking payment as completed more than once returns false', () => {
 
         service.pay()
 
