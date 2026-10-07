@@ -1,7 +1,7 @@
 export class PaymentService {
 
-  amount: number
-  isPaid: boolean = false
+  private amount: number
+  private isPaid: boolean = false
 
   constructor(amount: number)
   {
@@ -12,13 +12,19 @@ export class PaymentService {
 
     }
 
+    if(!Number.isInteger(amount)) {
+
+      throw new Error("Amount must be a finite number")
+
+    }
+
     this.amount = amount
 
   }
 
   applyDiscount(percent: number): void {
 
-    if (percent < 0 || percent > 100 || this.isPaid) {
+    if (!Number.isFinite(percent) || percent < 0 || percent > 100 || this.isPaid) {
 
       return
 
@@ -41,4 +47,17 @@ export class PaymentService {
     return true
 
   }
+
+  getAmount(): number {
+
+    return this.amount
+
+  }
+
+  getIsPaid(): boolean {
+
+    return this.isPaid
+
+  }
+
 }

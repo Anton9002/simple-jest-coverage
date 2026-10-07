@@ -11,6 +11,13 @@ describe("Payment service", () => {
 
     })
 
+    test("amount must be a finite number", () => {
+
+      expect(() => new PaymentService(NaN)).toThrow("Amount must be a finite number")
+      expect(() => new PaymentService(Infinity)).toThrow('Amount must be a finite number')
+
+    })
+
   })
 
   describe('Payment service methods', () => {
@@ -25,11 +32,19 @@ describe("Payment service", () => {
 
     describe('Discount', () => {
 
+      test("Apply discount just above 0%", () => {
+
+        service.applyDiscount(0.01)
+
+        expect(service.getAmount()).toBe(99.99)
+
+      })
+
       test('100% discount changes the amount to 0', () => {
 
         service.applyDiscount(100)
 
-        expect(service.amount).toBe(0)
+        expect(service.getAmount()).toBe(0)
 
       })
 
@@ -37,7 +52,7 @@ describe("Payment service", () => {
 
         service.applyDiscount(0)
 
-        expect(service.amount).toBe(100)
+        expect(service.getAmount()).toBe(100)
 
       })
 
@@ -46,30 +61,31 @@ describe("Payment service", () => {
         service.applyDiscount(20)
         service.applyDiscount(50)
 
-        expect(service.amount).toBe(40)
+        expect(service.getAmount()).toBe(40)
 
       })
 
       test("discount greater than 100 doesn't change the amount", () => {
-        service.applyDiscount(101)
 
-        expect(service.amount).toBe(100)
+        service.applyDiscount(100.01)
+
+        expect(service.getAmount()).toBe(100)
       })
 
       test("negative discount doesn't change the amount", () => {
 
         service.applyDiscount(-1)
 
-        expect(service.amount).toBe(100)
+        expect(service.getAmount()).toBe(100)
 
       })
 
       test("discount doesn't change the amount for completed payment", () => {
 
-        service.isPaid = true
+        service.pay()
         service.applyDiscount(50)
 
-        expect(service.amount).toBe(100)
+        expect(service.getAmount()).toBe(100)
 
       })
 
@@ -79,7 +95,7 @@ describe("Payment service", () => {
       test('marking payment as completed returns true', () => {
 
         expect(service.pay()).toBeTruthy()
-        expect(service.isPaid).toBeTruthy()
+        expect(service.getIsPaid()).toBeTruthy()
 
       })
 
@@ -88,7 +104,7 @@ describe("Payment service", () => {
         service.pay()
 
         expect(service.pay()).toBeFalsy()
-        expect(service.isPaid).toBeTruthy()
+        expect(service.getIsPaid()).toBeTruthy()
 
       })
 
