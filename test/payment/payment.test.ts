@@ -4,6 +4,15 @@ describe("Payment service", () => {
 
   describe('Amount', () => {
 
+    test("amount can be decimal", () => {
+
+      const service = new PaymentService(0.01)
+
+      expect(service.getAmount()).toBe(0.01)
+      expect(service.getIsPaid()).toBeFalsy()
+
+    })
+
     test('amount must be greater than 0', () => {
 
       expect(() => new PaymentService(0)).toThrow("Amount must be greater than 0")
@@ -75,6 +84,22 @@ describe("Payment service", () => {
       test("negative discount doesn't change the amount", () => {
 
         service.applyDiscount(-1)
+
+        expect(service.getAmount()).toBe(100)
+
+      })
+
+      test("infinity discount doesn't change the amount", () => {
+
+        service.applyDiscount(Infinity)
+
+        expect(service.getAmount()).toBe(100)
+
+      })
+
+      test("NaN discount doesn't change the amount", () => {
+
+        service.applyDiscount(NaN)
 
         expect(service.getAmount()).toBe(100)
 

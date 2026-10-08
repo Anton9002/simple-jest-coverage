@@ -12,7 +12,7 @@ export class PaymentService {
 
     }
 
-    if(!Number.isInteger(amount)) {
+    if(!Number.isFinite(amount)) {
 
       throw new Error("Amount must be a finite number")
 
